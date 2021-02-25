@@ -1,0 +1,61 @@
+{{page-title "Explore"}}
+
+<AuHeading @level="2" @skin="2">Explore the data with our explorer (?!)</AuHeading>
+<p>We made a first prototype that lets you query our data, and allows you to click through the information just like Wikipedia:
+<a href="#">Name for our tool in English</a>.</p>
+
+<p>picture of the tool</p>
+
+<AuHeading @level="3" @skin="3">How to work with our explorer</AuHeading>
+
+<AuHeading @level="4" @skin="4">1. Choose what type you want to explore</AuHeading>
+
+<p>When local governments publish their linked data, the information gets assigned <strong>types</strong> that you can explore.</p>
+<p>Let’s say you want to explore council meetings (zittingen):</p>
+
+<pre>
+  <code>
+    I am code
+  </code>
+</pre>
+<AuHelpText>This query will show you all the meetings in the database.</AuHelpText>
+
+<ul>
+<li>List</li>
+<li>of</li>
+<li>Types</li>
+</ul>
+
+<AuHr />
+<AuHeading @level="4" @skin="4">2. If desired, adjust the query</AuHeading>
+
+<p>Just like with any other query, you can order the results, count them, set limits,...</p>
+
+<pre>
+  <code>
+    I am code
+  </code>
+</pre>
+<AuHelpText>This query will show you the amount of meetings in each bestuursorgaan, in ascending order.</AuHelpText>
+
+<AuHr />
+<AuHeading @level="4" @skin="4">3. Run the query</AuHeading>
+
+<p>Once you run the query you will see the results in a table. </p>
+
+<p>picture of a result</p>
+<AuHelpText>To access the information, you will need to alter part of the URL in the results from data.lblod to dev.centrale-vindplaats.lblod</AuHelpText>
+
+<AuHr />
+<AuHeading @level="4" @skin="4">4. Start exploring</AuHeading>
+
+<p>Picture result</p>
+
+<AuButtonGroup>
+  <AuLink @linkRoute="participate.discover" class="au-c-button au-c-button--secondary au-c-button--large au-u-margin-bottom">
+    <AuIcon @icon="arrow-left" @size="large" @alignment="left" /> Discover the information
+  </AuLink>
+  <AuLink @linkRoute="participate.propose" class="au-c-button au-c-button--secondary au-c-button--large au-u-margin-bottom">
+    Propose your idea <AuIcon @icon="arrow-right" @size="large" @alignment="right" />
+  </AuLink>
+</AuButtonGroup>

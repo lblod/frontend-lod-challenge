@@ -1,7 +1,31 @@
-{{page-title "LodChallenge"}}
+{{page-title "Linked Open Data Challenge"}}
+<AuMainHeader @homeRoute="index" @appTitle="Linked Open Data Challenge" @contactRoute="contact">
+</AuMainHeader>
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
+<main class="au-c-main-container" id="main">
+  <div class="au-c-main-container__content au-c-main-container__content--scroll">
+    <main id="content">
+        {{outlet}}
 
-{{outlet}}
+      <AuMainFooter>
+        <AuHeading @level="3" @skin="4">
+          lod-challenge.lblod.info is een officiële website van de Vlaamse overheid
+        </AuHeading>
+        <AuContent @skin="small">
+          <p>Uitgegeven door <a class="au-c-link" href="https://www.vlaanderen.be/organisaties/administratieve-diensten-van-de-vlaamse-overheid/beleidsdomein-kanselarij-en-bestuur/agentschap-binnenlands-bestuur">Agentschap Binnenlands Bestuur</a></p>
+          <ul class="au-c-list-horizontal">
+            <li class="au-c-list-horizontal__item">
+              {{!-- <AuLink @linkRoute="legal.disclaimer" @skin="secondary">Disclaimer</AuLink> --}}
+            </li>
+            <li class="au-c-list-horizontal__item">
+              {{!-- <AuLink @linkRoute="legal.cookiestatement" @skin="secondary">Cookieverklaring</AuLink> --}}
+            </li>
+            <li class="au-c-list-horizontal__item">
+              {{!-- <AuLink @linkRoute="legal.toegankelijkheidsverklaring" @skin="secondary">Toegankelijkheidsverklaring</AuLink> --}}
+            </li>
+          </ul>
+        </AuContent>
+      </AuMainFooter>
+    </main>
+  </div>
+</main>

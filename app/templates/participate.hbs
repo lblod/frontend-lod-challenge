@@ -1,0 +1,51 @@
+<div class="au-c-main-container__content au-c-main-container__content--scroll">
+  <AuToolbar @size="medium" @skin="tint" @border="bottom" class="au-c-toolbar__breadcrumbs">
+    <AuToolbarGroup>
+      <ul class="au-c-list-horizontal">
+        <li class="au-c-list-horizontal__item">
+          <AuLink @linkRoute="index" @skin="secondary">
+            <AuIcon @icon="arrow-left" @alignment="left" />
+            Home
+          </AuLink>
+        </li>
+        <li class="au-c-list-horizontal__item">
+          <strong>Participate in our Challenge</strong>
+        </li>
+      </ul>
+    </AuToolbarGroup>
+  </AuToolbar>
+  <section class="au-o-region-large">
+    <div class="au-o-layout au-o-layout--large">
+      <AuContent>
+        <AuHeading>Participate in our Challenge</AuHeading>
+      </AuContent>
+      <hr class="au-c-hr">
+      <div class="au-o-grid">
+        <div class="au-o-grid__item au-u-1-4@medium">
+          <ul class="au-c-list-navigation">
+            <li class="au-c-list-navigation__item">
+              <AuNavigationLink @linkRoute="participate.discover">
+                Discover the information
+              </AuNavigationLink>
+            </li>
+            <li class="au-c-list-navigation__item">
+              <AuNavigationLink @linkRoute="participate.explore">
+                Explore the data
+              </AuNavigationLink>
+            </li>
+            <li class="au-c-list-navigation__item">
+              <AuNavigationLink @linkRoute="participate.propose">
+                Propose your idea
+              </AuNavigationLink>
+            </li>
+          </ul>
+        </div>
+        <div class="au-o-grid__item au-u-3-4@medium">
+          <AuContent id="content">
+            {{outlet}}
+          </AuContent>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
