@@ -28,3 +28,7 @@
   }
 
 }
+
+a.au-c-button:not(.au-c-button--secondary):not(.au-c-button--tertiary) {
+  color: $au-white;
+}
