@@ -5,7 +5,7 @@
     <div class="au-o-grid__item au-u-2-4@medium">
       <AuContent>
         <AuHeading @level="2" @skin="2">Explore the data with our <br> Decision Data Hive</AuHeading>
-        <p>We made a first prototype that lets you query our data, and allows you to click through the information just like Wikipedia: <a href="#">Decision Data Hive</a>.</p>
+        <p>We made a first prototype that lets you query our data, and allows you to click through the information just like Wikipedia: <a href="https://openbelgium-2021.lblod.info/" target="_blank" rel="noopener noreferrer">Decision Data Hive</a>.</p>
       </AuContent>
     </div>
     <div class="au-o-grid__item au-u-1-4@medium">
@@ -50,13 +50,13 @@
   </div>
 </div>
 
-<img src="/images/example-entry.png" style="border: 1px solid lightgray;">
+<img src="/images/example-entry-smaller.png" style="border: 1px solid lightgray;">
 
 <AuHeading @level="3" @skin="3">How To Work With The Decision Data Hive</AuHeading>
 
 <AuHeading @level="4" @skin="4">1. Choose What Type Of Data You Want To Explore</AuHeading>
 
-<p>When local governments publish their linked data, the information gets assigned <strong>types</strong> that you can explore.</p>
+<p>When local authorities publish their linked data, the information gets assigned <strong>types</strong> that you can explore.</p>
 
 <p>Let’s say you want to explore council meetings (zittingen) in the database:</p>
 <CodeBlock @code='PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -76,14 +76,13 @@ SELECT * WHERE {
 } LIMIT 10'
   @language="html" />
 
-<p>You can also find out explore who attended a council meeting:</p>
+<p>You can also look for the agenda of a specific council meeting:</p>
 
 <CodeBlock @code='PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
-PREFIX person: <http://www.w3.org/ns/person#>
 SELECT * WHERE {
-  ?sub a person:Person.
+  ?sub a besluit:Agendapunt.
 } LIMIT 10'
   @language="html" />
 
@@ -99,7 +98,7 @@ GROUP BY ?bestuursorgaan
 ORDER BY ?aantalZittingen'
   @language="html" />
 
-<AuHelpText>This query will show you the amount of meetings in each Governing Body (bestuursorgaan), in ascending order.</AuHelpText>
+<AuHelpText>This query will show you the amount of meetings in each governing body (bestuursorgaan), in ascending order.</AuHelpText>
 
 <p>If you want to discover more types of data you can query on, execute this query and you will find more possibilities:</p>
 
@@ -107,8 +106,7 @@ ORDER BY ?aantalZittingen'
   ?sub a ?type .
 } LIMIT 100'
   @language="html" />
-
-<p><AuLink @linkRoute="participate.how-to-sparql">[DUTCH] Find more information on how to query our database</AuLink></p>
+{{!-- <p><AuLink @linkRoute="participate.how-to-sparql">[DUTCH] Find more information on how to query our database</AuLink></p> --}}
 
 <AuHr @size="large" />
 <AuHeading @level="4" @skin="4">3. Run the query</AuHeading>
@@ -119,7 +117,12 @@ ORDER BY ?aantalZittingen'
 <AuHr @size="large"/>
 <AuHeading @level="4" @skin="4">4. Start exploring</AuHeading>
 <p>Click on any link with "openbelgium" in the URL and see where it takes you. The page will show you more information about the subject you clicked, and its relation to other subjects; which you can discover by clicking the links you see on that subject's page.</p>
+<p>The page will show you more information about the subject you clicked, and its relation to other subjects; which you can discover by clicking the links you see on that subject's page.</p>
 <img src="/images/example-result.png" style="border: 1px solid lightgray;">
+
+<AuAlert @alertIcon="info-circle" @alertTitle="Ran into an issue? Get in touch!" @alertskin={{"info"}}>
+  <p>In case you run into an issue, you can't find your way or you have some feedback; don't hesitate to get in touch via <a href="mailto:digitaalABB@vlaanderen.be">digitaalABB@vlaanderen.be</a>.</p>
+</AuAlert>
 
 <AuButtonGroup>
   <AuLink @linkRoute="participate.discover" class="au-c-button au-c-button--secondary au-c-button--large au-u-margin-bottom">
