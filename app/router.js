@@ -12,5 +12,7 @@ Router.map(function () {
     this.route('discover');
     this.route('explore');
     this.route('propose');
+    this.route('how-to-sparql');
   });
+  this.route('how-to-sparql');
 });

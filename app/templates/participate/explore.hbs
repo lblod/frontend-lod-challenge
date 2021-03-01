@@ -50,7 +50,7 @@
   </div>
 </div>
 
-<img src="/assets/images/example-entry.png">
+<img src="/images/example-entry.png" style="border: 1px solid lightgray;">
 
 <AuHeading @level="3" @skin="3">How To Work With The Decision Data Hive</AuHeading>
 
@@ -108,17 +108,18 @@ ORDER BY ?aantalZittingen'
 } LIMIT 100'
   @language="html" />
 
-<p><a href="https://lblod.github.io/pages-vendors/#/docs/sparql-endpoint">[DUTCH] Find more information on how to query our database: https://lblod.github.io/pages-vendors/#/docs/sparql-endpoint</a>.</p>
+<p><AuLink @linkRoute="participate.how-to-sparql">[DUTCH] Find more information on how to query our database</AuLink></p>
 
-<AuHr />
+<AuHr @size="large" />
 <AuHeading @level="4" @skin="4">3. Run the query</AuHeading>
 
 <p>Once you run the query you will see the results in a table. </p>
-<img src="/assets/images/example-search.png">
+<img src="/images/example-search.png" style="border: 1px solid lightgray;">
 
-<AuHr />
+<AuHr @size="large"/>
 <AuHeading @level="4" @skin="4">4. Start exploring</AuHeading>
-<img src="/assets/images/example-result.png">
+<p>Click on any link with "openbelgium" in the URL and see where it takes you. The page will show you more information about the subject you clicked, and its relation to other subjects; which you can discover by clicking the links you see on that subject's page.</p>
+<img src="/images/example-result.png" style="border: 1px solid lightgray;">
 
 <AuButtonGroup>
   <AuLink @linkRoute="participate.discover" class="au-c-button au-c-button--secondary au-c-button--large au-u-margin-bottom">

@@ -1,0 +1,253 @@
+{{page-title "HowToSparql"}}
+<div class="page">
+  <section class="region region--alt">
+  <div class="layout layout--wide">
+    <div class="grid">
+      <div class="col--8-12 col--1-1--s">
+        <h1 class="h1">SPARQL endpoint </h1>
+        <p>
+Dit database-endpoint kan bevraagd worden aan de hand van SPARQL, een query-taal om RDF data te manipuleren. <br>
+RDF is een formaat dat binnen het kader van het semantische web -en dus linked data- zeer vaak voorkomt.
+<br>
+Het LBLOD-project gebruikt RDF intensief.  Verschillende datasets worden gepubliceerd als Turtle en RDFa, serializatie-formaten die de RDF-standaard respecteren.
+<br><br>
+Dit endpoint kan gebruikt worden om rechstreeks op de bron te werken.  Dit helpt niet alleen om het aantal tussenliggende conversies te verminderen, maar ook heel praktisch om complexere bevragingen in minder stappen uit te voeren.
+<br>
+Met SPARQL staat men dichter bij de data, en dus dichter op het model.
+        </p>
+      </div>
+    </div>
+    </div>
+</section>
+
+<section class="region">
+  <div class="layout layout--wide">
+    <div class="grid">
+      <div class="col--8-12 col--1-1--s">
+        <article class="u-spacer--large">
+          <h2 class="h2">Benaderen van het endpoint</h2>
+          <p class="u-spacer">
+            Het endpoint staat beschikbaar op <br>
+            <pre id="ember124" class="code-block language-markup ember-view"><!----><code class="language-markup">https://centrale-vindplaats.lblod.info/sparql</code></pre>
+            Dit endpoint heeft UI beschikbaar waar SPARQL-queries in uitgevoerd kunnen worden. <br>
+            De queries kunnen ook aan de hand van HTTP calls uitgevoerd worden. <br>
+            De specificatie van de HTTP-calls vindt u <a href="https://www.w3.org/TR/sparql11-protocol/" target="_blank">hier</a>.
+
+            <br><br>
+            De onderliggende HTTP-calls van <a href="https://centrale-vindplaats.lblod.info/sparql" target="_blank">https://centrale-vindplaats.lblod.info/sparql </a> respecteren deze standaard. <br>
+            Mocht u op zoek zijn naar hoe deze SPARQL-queries omgezet worden naar HTTP-calls, vormt de UI een goed startpunt.
+            <br>
+            De UI zelf is een instantie van <a href="https://triply.cc/docs/yasgui" target="_blank">Yasgui</a>. Verder informatie over het gebruik ervan, vindt u daar.
+            <br>
+            <br>
+            Momenteel host <a href="https://centrale-vindplaats.lblod.info" target="_blank">https://centrale-vindplaats.lblod.info</a>
+             alle data die beschikbaar is op <a href="https://mandaten.lokaalbestuur.vlaanderen.be/" target="_blank">https://mandaten.lokaalbestuur.vlaanderen.be </a>
+              en <a href="https://leidinggevenden.lokaalbestuur.vlaanderen.be/" target="_blank">https://leidinggevenden.lokaalbestuur.vlaanderen.be</a>.
+          </p>
+
+          <h2 class="h2">Voorbeelden</h2>
+          De volgende sectie bevat een aantal voorbeelden, specifiek geralateerd aan het model.
+          <h3 class="h3">Oplijsten bestuurseenheden en hun classificatie</h3>
+          <p class="u-spacer">
+              <pre id="ember125" class="code-block language-markup ember-view"><!----><code class="language-markup">PREFIX besluit: &lt;http://data.vlaanderen.be/ns/besluit#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+
+SELECT DISTINCT  ?bestuurseenheidUri ?bestuureenheidLabel ?classificatieLabel WHERE {
+  ?bestuurseenheidUri a besluit:Bestuurseenheid ;
+    skos:prefLabel ?bestuurseenheidNaam;
+    besluit:classificatie ?classificatieUri ;
+    skos:prefLabel ?bestuureenheidLabel ;
+    besluit:werkingsgebied ?werkinsgebiedUri.
+
+  ?classificatieUri skos:prefLabel ?classificatieLabel .
+
+}</code></pre>
+          </p>
+
+          <h3 class="h3">Lijst alle bestuursorganen (in bestuursperiode op)</h3>
+          <p class="u-spacer">
+            De lijst van alle bestuursorganen (in bestuursperiode) wordt hier opgelijst, alsook hun naam, start en eind datum.
+              <pre id="ember126" class="code-block language-markup ember-view"><!----><code class="language-markup">PREFIX org: &lt;http://www.w3.org/ns/org#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX besluit: &lt;http://data.vlaanderen.be/ns/besluit#&gt;
+PREFIX mandaat: &lt;http://data.vlaanderen.be/ns/mandaat#&gt;
+
+SELECT DISTINCT ?bestuursorgaanInPeriodeUri ?bestuursorgaanNaam ?start ?einde WHERE {
+  ?bestuursorgaanInPeriodeUri a besluit:Bestuursorgaan ;
+    mandaat:isTijdspecialisatieVan ?bestuursorgaanUri ;
+    mandaat:bindingStart ?start ;
+    org:hasPost ?mandaatUri .
+
+  ?bestuursorgaanUri skos:prefLabel ?bestuursorgaanNaam.
+  OPTIONAL { ?bestuursorgaanInPeriodeUri mandaat:bindingEinde ?einde }
+}</code></pre>
+          </p>
+
+          <h3 class="h3">Lijst van alle mandaten, en de bijbehorende personen</h3>
+          <p class="u-spacer">
+              <pre id="ember127" class="code-block language-markup ember-view"><!----><code class="language-markup">PREFIX fo: &lt;http://www.w3.org/1999/XSL/Format#&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX org: &lt;http://www.w3.org/ns/org#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX besluit: &lt;http://data.vlaanderen.be/ns/besluit#&gt;
+PREFIX mandaat: &lt;http://data.vlaanderen.be/ns/mandaat#&gt;
+PREFIX persoon: &lt;http://data.vlaanderen.be/ns/persoon#&gt;
+
+SELECT DISTINCT ?persoonUri ?roleLabel ?naam ?achternaam WHERE {
+  ?bestuursorgaanInPeriodeUri a besluit:Bestuursorgaan ;
+    org:hasPost ?mandaatUri .
+
+  ?mandaatUri org:role ?roleUri .
+  ?roleUri skos:prefLabel ?roleLabel .
+
+  ?mandatarisUri org:holds ?mandaatUri ;
+    mandaat:isBestuurlijkeAliasVan ?persoonUri .
+
+  ?persoonUri persoon:gebruikteVoornaam ?naam ;
+    foaf:familyName ?achternaam .
+}</code></pre>
+          </p>
+
+          <h3 class="h3">Overzicht van leidinggevenden per bestuurseenheid</h3>
+          <p class="u-spacer">
+              <pre id="ember128" class="code-block language-markup ember-view"><!----><code class="language-markup">PREFIX lblodlg: &lt;http://data.lblod.info/vocabularies/leidinggevenden/&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX org: &lt;http://www.w3.org/ns/org#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX besluit: &lt;http://data.vlaanderen.be/ns/besluit#&gt;
+PREFIX mandaat: &lt;http://data.vlaanderen.be/ns/mandaat#&gt;
+PREFIX persoon: &lt;http://data.vlaanderen.be/ns/persoon#&gt;
+
+SELECT DISTINCT ?bestuurseenheidNaam ?roleLabel ?persoonUri ?gebruikteVoornaam ?achternaam WHERE {
+  ?bestuursorgaanUri besluit:bestuurt ?bestuurseenheidUri.
+  ?bestuurseenheidUri skos:prefLabel ?bestuurseenheidNaam.
+
+  ?bestuursorgaanInPeriodeUri a besluit:Bestuursorgaan ;
+    mandaat:isTijdspecialisatieVan ?bestuursorgaanUri ;
+    lblodlg:heeftBestuursfunctie ?bestuursfunctieUri .
+
+  ?bestuursfunctieUri org:role ?roleUri .
+  ?roleUri skos:prefLabel ?roleLabel .
+
+  ?mandatarisUri org:holds ?bestuursfunctieUri ;
+    mandaat:isBestuurlijkeAliasVan ?persoonUri .
+
+  ?persoonUri persoon:gebruikteVoornaam ?gebruikteVoornaam ;
+    foaf:familyName ?achternaam .
+}</code></pre>
+          </p>
+
+          <h3 class="h3">Een vraag over de Burgemeester van Antwerpen</h3>
+          Gegeven de Burgemeester van Antwerpen voor bestuursperiode startende op 2019, welke andere mandaten vinden we terug voor deze persoon?
+          <p class="u-spacer">
+              <pre id="ember129" class="code-block language-markup ember-view"><!----><code class="language-markup">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX org: &lt;http://www.w3.org/ns/org#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX besluit: &lt;http://data.vlaanderen.be/ns/besluit#&gt;
+PREFIX mandaat: &lt;http://data.vlaanderen.be/ns/mandaat#&gt;
+PREFIX persoon: &lt;http://data.vlaanderen.be/ns/persoon#&gt;
+
+SELECT DISTINCT ?naam ?achternaam ?roleLabel ?bestuursorgaanNaam ?start ?einde WHERE {
+  &lt;http://data.lblod.info/id/mandatarissen/5C46EC3357753A000900007B&gt; mandaat:isBestuurlijkeAliasVan ?persoonUri.
+  ?persoonUri persoon:gebruikteVoornaam ?naam ;
+    foaf:familyName ?achternaam .
+
+  ?mandaatUri org:role ?roleUri .
+  ?roleUri skos:prefLabel ?roleLabel .
+
+  ?mandatarisUri org:holds ?mandaatUri ;
+    mandaat:isBestuurlijkeAliasVan ?persoonUri .
+
+  ?bestuursorgaanInPeriodeUri a besluit:Bestuursorgaan ;
+    org:hasPost ?mandaatUri .
+
+
+  ?bestuursorgaanInPeriodeUri a besluit:Bestuursorgaan ;
+    mandaat:isTijdspecialisatieVan ?bestuursorgaanUri ;
+    mandaat:bindingStart ?start ;
+    org:hasPost ?mandaatUri .
+
+  ?bestuursorgaanUri skos:prefLabel ?bestuursorgaanNaam.
+  OPTIONAL { ?bestuursorgaanInPeriodeUri mandaat:bindingEinde ?einde }
+  FILTER ( ?mandatarisUri NOT IN ( &lt;http://data.lblod.info/id/mandatarissen/5C46EC3357753A000900007B&gt; ))
+}</code></pre>
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="region region--alt">
+  <div class="layout layout--wide">
+    <h2 class="h2">Beschikbare documentatie</h2>
+    <ul class="grid grid--is-stacked js-equal-height-container">
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+<a href="#/docs/submission-api" id="ember130" class="doormat js-equal-height u-mobile-no-equal-height ember-view" style="min-height: 171px;">          <div class="doormat__title">
+            Meldingsplicht API
+          </div>
+          <span class="doormat__text">API om een nieuwe melding aan te maken in Loket voor Lokale Besturen op basis van een publicatie. Indien al de nodige velden ingevuld zijn, kan de melding automatisch verzonden worden.</span>
+</a>      </li>
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+<a href="#/docs/submission-annotations" id="ember131" class="doormat js-equal-height u-mobile-no-equal-height ember-view" style="min-height: 171px;">          <div class="doormat__title">
+            Annotaties voor automatische melding
+          </div>
+          <span class="doormat__text">Annotaties die gebruikt worden bij automatische meldingen van besluiten en documenten.</span>
+</a>      </li>
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+<a href="#/docs/publication-annotations" id="ember132" class="doormat js-equal-height u-mobile-no-equal-height ember-view" style="min-height: 171px;">          <div class="doormat__title">
+            Annotaties van besluiten en documenten
+          </div>
+          <span class="doormat__text">Annotaties die gebruikt worden bij de publicatie van besluiten en documenten opdat ze automatisch geharvest kunnen worden.</span>
+</a>      </li>
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+        <a href="https://data.vlaanderen.be/doc/applicatieprofiel/besluit-publicatie/" target="_blank" rel="noopener" class="doormat js-equal-height u-mobile-no-equal-height" style="min-height: 171px;">
+          <div class="doormat__title">
+            Besluit Publicatie
+            <p><small class="uppercase text-fade"><i class="vi vi-external"></i> externe link</small></p>
+          </div>
+          <span class="doormat__text">Dit applicatieprofiel definieert een specificatie voor de publicatie van notulen en besluiten van bestuursorgaan.</span>
+        </a>
+      </li>
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+        <a href="https://data.vlaanderen.be/doc/applicatieprofiel/mandatendatabank/" target="_blank" rel="noopener" class="doormat js-equal-height u-mobile-no-equal-height" style="min-height: 171px;">
+          <div class="doormat__title">
+            Mandatendatabank
+            <p><small class="uppercase text-fade"><i class="vi vi-external"></i> externe link</small></p>
+          </div>
+          <span class="doormat__text">Dit applicatieprofiel definieert een specificatie voor een gelinkte mandatendatabank op basis van gelinkte besluiten.</span>
+        </a>
+      </li>
+      <li class="col--4-12 col--1-2--s col--12-12--xs" style="min-height: 194px;">
+<a href="#/docs/leidinggevenden" id="ember133" class="doormat js-equal-height u-mobile-no-equal-height ember-view" style="min-height: 171px;">          <div class="doormat__title">
+            Leidinggevenden
+          </div>
+          <span class="doormat__text">De leidinggevenden databank volgt het applicatieprofiel mandatendatabank, maar werd uitgebreid met enkele subklassen en eigenschappen.</span>
+</a>      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="region">
+  <div class="layout layout--wide">
+    <a href="#/" id="ember134" class="link--icon--caret link--icon--caret--back ember-view">Terug naar overzicht</a>
+  </div>
+</section>
+
+
+  <section class="region">
+    <div class="layout layout--wide" id="infoblock">
+      <div class="layout__wrapper">
+        <section class="info-block info-block--faq">
+          <header class="info-block__header">
+            <h1 class="label-above info-block__title">Vragen</h1>
+          </header>
+          <div class="info-block__content">
+            <p>Voor meer informatie kan u ons contacteren op <a href="mailto:digitaalABB@vlaanderen.be">digitaalABB@vlaanderen.be</a></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
