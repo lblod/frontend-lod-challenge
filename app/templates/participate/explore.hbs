@@ -2,6 +2,12 @@
 
 <div class="au-u-margin-top-large">
   <div class="au-o-grid">
+    <div class="au-o-grid__item au-u-2-4@medium">
+      <AuContent>
+        <AuHeading @level="2" @skin="2">Explore the data with our <br> Decision Data Hive</AuHeading>
+        <p>We made a first prototype that lets you query our data, and allows you to click through the information just like Wikipedia: <a href="#">Decision Data Hive</a>.</p>
+      </AuContent>
+    </div>
     <div class="au-o-grid__item au-u-1-4@medium">
       <svg width="250" height="274" viewBox="0 0 313 274" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0)">
@@ -41,62 +47,78 @@
         </defs>
       </svg>
     </div>
-    <div class="au-o-grid__item au-u-2-4@medium">
-      <AuContent>
-        <AuHeading @level="2" @skin="2">Explore the data with our <br> LOD-explorer</AuHeading>
-
-        <p>We made a first prototype that lets you query our data, and allows you to click through the information just like Wikipedia: <a href="#">LOD-explorer</a>.</p>
-    </AuContent>
-    </div>
   </div>
 </div>
 
-<p>picture of the tool</p>
+<img src="/assets/images/example-entry.png">
 
-<AuHeading @level="3" @skin="3">How to work with our explorer</AuHeading>
+<AuHeading @level="3" @skin="3">How To Work With The Decision Data Hive</AuHeading>
 
-<AuHeading @level="4" @skin="4">1. Choose what type you want to explore</AuHeading>
+<AuHeading @level="4" @skin="4">1. Choose What Type Of Data You Want To Explore</AuHeading>
 
 <p>When local governments publish their linked data, the information gets assigned <strong>types</strong> that you can explore.</p>
-<p>Let’s say you want to explore council meetings (zittingen):</p>
 
-<pre>
-  <code>
-    I am code
-  </code>
-</pre>
-<AuHelpText>This query will show you all the meetings in the database.</AuHelpText>
+<p>Let’s say you want to explore council meetings (zittingen) in the database:</p>
+<CodeBlock @code='PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+SELECT * WHERE {
+  ?sub a besluit:Zitting.
+} LIMIT 10'
+  @language="html" />
 
-<ul>
-<li>List</li>
-<li>of</li>
-<li>Types</li>
-</ul>
+<p>You can do the same with the decisions (besluiten):</p>
+<CodeBlock @code='PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+SELECT * WHERE {
+  ?sub a besluit:Besluit.
+} LIMIT 10'
+  @language="html" />
 
-<AuHr />
+<p>You can also find out explore who attended a council meeting:</p>
+
+<CodeBlock @code='PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX person: <http://www.w3.org/ns/person#>
+SELECT * WHERE {
+  ?sub a person:Person.
+} LIMIT 10'
+  @language="html" />
+
+<AuHr @size="large" />
 <AuHeading @level="4" @skin="4">2. If desired, adjust the query</AuHeading>
-
 <p>Just like with any other query, you can order the results, count them, set limits,...</p>
 
-<pre>
-  <code>
-    I am code
-  </code>
-</pre>
-<AuHelpText>This query will show you the amount of meetings in each bestuursorgaan, in ascending order.</AuHelpText>
+<CodeBlock @code='SELECT DISTINCT ?bestuursorgaan (COUNT(?s) AS ?aantalZittingen) WHERE {
+  ?s a besluit:Zitting;
+    besluit:isGehoudenDoor ?bestuursorgaan.
+}
+GROUP BY ?bestuursorgaan
+ORDER BY ?aantalZittingen'
+  @language="html" />
+
+<AuHelpText>This query will show you the amount of meetings in each Governing Body (bestuursorgaan), in ascending order.</AuHelpText>
+
+<p>If you want to discover more types of data you can query on, execute this query and you will find more possibilities:</p>
+
+<CodeBlock @code='SELECT DISTINCT ?type WHERE {
+  ?sub a ?type .
+} LIMIT 100'
+  @language="html" />
+
+<p><a href="https://lblod.github.io/pages-vendors/#/docs/sparql-endpoint">[DUTCH] Find more information on how to query our database: https://lblod.github.io/pages-vendors/#/docs/sparql-endpoint</a>.</p>
 
 <AuHr />
 <AuHeading @level="4" @skin="4">3. Run the query</AuHeading>
 
 <p>Once you run the query you will see the results in a table. </p>
-
-<p>picture of a result</p>
-<AuHelpText>To access the information, you will need to alter part of the URL in the results from data.lblod to dev.centrale-vindplaats.lblod</AuHelpText>
+<img src="/assets/images/example-search.png">
 
 <AuHr />
 <AuHeading @level="4" @skin="4">4. Start exploring</AuHeading>
-
-<p>Picture result</p>
+<img src="/assets/images/example-result.png">
 
 <AuButtonGroup>
   <AuLink @linkRoute="participate.discover" class="au-c-button au-c-button--secondary au-c-button--large au-u-margin-bottom">
