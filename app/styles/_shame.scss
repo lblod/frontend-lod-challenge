@@ -42,3 +42,10 @@
 a.au-c-button:not(.au-c-button--secondary):not(.au-c-button--tertiary) {
   color: $au-white;
 }
+
+.au-c-heading a,
+.c-u-word-break--break-all,
+.au-c-data-table__table td,
+a.au-c-link {
+  word-break: break-word;
+}
