@@ -18,5 +18,8 @@ module.exports = function (defaults) {
     }
   });
 
+  app.import('node_modules/@triply/yasgui/build/yasgui.min.css');
+  app.import('node_modules/svgxuse/svgxuse.js');
+
   return app.toTree();
 };

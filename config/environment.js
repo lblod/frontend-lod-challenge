@@ -6,6 +6,14 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    metis: {
+       baseUrl: "EMBER_METIS_BASE_URL"
+    },
+    yasgui: {
+      // NOTE: look at app/modifiers/yasgui.js when changing this variable
+      defaultQuery: "EMBER_YASGUI_DEFAULT_QUERY",
+      extraPrefixes: "EMBER_YASGUI_EXTRA_PREFIXES"
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

@@ -29,6 +29,16 @@
 
 }
 
+
+.yasgui .controlbar {
+	justify-content: flex-end;
+	margin-bottom: 1rem;
+}
+
+.yasgui .autocompleteWrapper {
+  display: none !important;
+}
+
 a.au-c-button:not(.au-c-button--secondary):not(.au-c-button--tertiary) {
   color: $au-white;
 }

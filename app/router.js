@@ -1,5 +1,6 @@
 import EmberRouter from '@ember/routing/router';
 import config from 'lod-challenge/config/environment';
+import metisFallbackRoute from 'metis/utils/fallback-route';
 
 export default class Router extends EmberRouter {
   location = config.locationType;
@@ -15,4 +16,7 @@ Router.map(function () {
     this.route('how-to-sparql');
   });
   this.route('how-to-sparql');
+
+  metisFallbackRoute(this);
+  this.route('sparql');
 });
