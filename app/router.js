@@ -17,6 +17,6 @@ Router.map(function () {
   });
   this.route('how-to-sparql');
 
-  metisFallbackRoute(this);
   this.route('sparql');
+  metisFallbackRoute(this);
 });
