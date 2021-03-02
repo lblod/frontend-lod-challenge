@@ -7,7 +7,7 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'auto',
     metis: {
-       baseUrl: "EMBER_METIS_BASE_URL"
+       baseUrl: "http://openbelgium-2021.lblod.info/"
     },
     yasgui: {
       // NOTE: look at app/modifiers/yasgui.js when changing this variable
