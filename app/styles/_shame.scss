@@ -1,11 +1,10 @@
 /* ==========================================================================
    #SHAME
-   Dirty temporary css for demo purposes.
-   Some parts will be reused, but most of them will not.
+   Dirty temporary css waiting for a structural solution
    ========================================================================== */
 
 /* ==================================
-   #HERO
+   #HERO TODO: create vision and make part of appuniversum
    ================================== */
 
 .au-c-intro {
@@ -26,9 +25,9 @@
       margin-top: $au-unit;
     }
   }
-
 }
 
+/* Make sure the sparql query table does not overflow and the buttons are positioned correctly */
 
 .yasgui .controlbar {
 	justify-content: flex-end;
@@ -43,9 +42,12 @@ a.au-c-button:not(.au-c-button--secondary):not(.au-c-button--tertiary) {
   color: $au-white;
 }
 
-.au-c-heading a,
-.c-u-word-break--break-all,
-.au-c-data-table__table td,
-a.au-c-link {
-  word-break: break-word;
+.yasgui table.dataTable {
+  width: auto !important;
+}
+
+.yasgui td,
+.yasgui td {
+  word-break: break-word !important;
+  text-align: left;
 }
