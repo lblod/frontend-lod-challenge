@@ -75,7 +75,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@appuniversum/appuniversum": "0.0.14",
+    "@appuniversum/appuniversum": "0.0.15",
     "ember-cli-deploy": "^1.0.2",
     "ember-cli-deploy-build": "^1.1.1",
     "ember-cli-deploy-display-revisions": "^1.0.0",
