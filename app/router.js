@@ -19,4 +19,5 @@ Router.map(function () {
 
   this.route('sparql');
   metisFallbackRoute(this);
+  this.route('challenge');
 });
