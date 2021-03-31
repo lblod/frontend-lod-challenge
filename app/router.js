@@ -14,10 +14,12 @@ Router.map(function () {
     this.route('explore');
     this.route('propose');
     this.route('how-to-sparql');
+    this.route('submissions');
   });
   this.route('how-to-sparql');
 
   this.route('sparql');
   metisFallbackRoute(this);
   this.route('challenge');
+  this.route('submissions');
 });
